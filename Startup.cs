@@ -25,7 +25,7 @@ namespace StockManagment
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<StocksDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("StocksDb")));
             services.AddCors(options => {
-                options.AddPolicy(MyAllowSpecificOrigins, builder => { builder.WithOrigins("http://localhost:3000/").AllowAnyHeader().AllowAnyMethod(); });
+                options.AddPolicy(MyAllowSpecificOrigins, builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod(); });
             });
         }
 

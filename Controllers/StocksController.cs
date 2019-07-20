@@ -11,6 +11,7 @@ namespace StockManagment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class StocksController : ControllerBase
     {
         private readonly StocksDbContext _context;
@@ -21,7 +22,6 @@ namespace StockManagment.Controllers
         }
 
         // GET: api/Stocks
-        [EnableCors]
         [HttpGet]
         public IEnumerable<Stock> GetStocks()
         {
@@ -83,7 +83,7 @@ namespace StockManagment.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> PutStock()
         {
 
