@@ -16,9 +16,12 @@ namespace StockManagment.Controllers
     {
         private readonly StocksDbContext _context;
 
-        public StocksController(StocksDbContext context)
+        private readonly IMarketNotificationServices _marketNotificationServices;
+
+        public StocksController(StocksDbContext context, IMarketNotificationServices marketNotificationServices)
         {
             _context = context;
+            _marketNotificationServices = marketNotificationServices;
         }
 
         // GET: api/Stocks
@@ -96,7 +99,9 @@ namespace StockManagment.Controllers
                 _context.Entry(stock).State = EntityState.Modified;
             }
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            await _marketNotificationServices.NotifyRefreshStocks();
 
             return NoContent();
         }

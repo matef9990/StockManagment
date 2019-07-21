@@ -27,6 +27,10 @@ namespace StockManagment
             services.AddCors(options => {
                 options.AddPolicy(MyAllowSpecificOrigins, builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod(); });
             });
+
+            services.AddSignalR();
+
+            services.AddTransient<IMarketNotificationServices, MarketNotificationServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +43,7 @@ namespace StockManagment
 
             app.UseMvc();
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseSignalR(route => route.MapHub<StocksHub>("/hubs/stocks"));
         }
     }
 }
