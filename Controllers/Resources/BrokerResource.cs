@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace StockManagment.Controllers.Resources
+﻿namespace StockManagment.Controllers.Resources
 {
     public class BrokerResource
     {
@@ -9,12 +6,6 @@ namespace StockManagment.Controllers.Resources
 
         public string Name { get; set; }
 
-        public ICollection<PersonResource> People { get; set; }
 
-        public BrokerResource()
-        {
-            People = new Collection<PersonResource>();
-
-        }
     }
 }
