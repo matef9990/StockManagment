@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using StockManagment.Models;
 
-namespace StockManagment.Models
+namespace StockManagment.Controllers.Resources
 {
-    [Table("Orders")]
-    public class Order
+    public class OrderResource
     {
         public int OrderId { get; set; }
-        
+
 
         public double Price { get; set; }
 
@@ -18,9 +17,9 @@ namespace StockManagment.Models
         public Stock Stock { get; set; }
 
         public int? PersonId { get; set; }
-        public Person Person { get; set; }
+        public PersonResource Person { get; set; }
 
         public int BrokerId { get; set; }
-        public Broker Broker { get; set; }
+        public BrokerResource Broker { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace StockManagment
             });
 
             services.AddSignalR();
-
+            services.AddAutoMapper();
             services.AddTransient<IMarketNotificationServices, MarketNotificationServices>();
         }
 

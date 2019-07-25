@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockManagment.Models;
 
 namespace StockManagment.Migrations
 {
     [DbContext(typeof(StocksDbContext))]
-    partial class StocksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190725080236_EditOrdersTableToMakePersonAndBrokerNullable")]
+    partial class EditOrdersTableToMakePersonAndBrokerNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace StockManagment.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BrokerId");
+                    b.Property<int?>("BrokerId");
 
                     b.Property<decimal>("Commission");
 
@@ -61,6 +63,19 @@ namespace StockManagment.Migrations
                     b.HasIndex("StockId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("StockManagment.Models.PeopleBrokers", b =>
+                {
+                    b.Property<int>("PersonId");
+
+                    b.Property<int>("BrokerId");
+
+                    b.HasKey("PersonId", "BrokerId");
+
+                    b.HasIndex("BrokerId");
+
+                    b.ToTable("PeopleBrokers");
                 });
 
             modelBuilder.Entity("StockManagment.Models.Person", b =>
@@ -102,8 +117,7 @@ namespace StockManagment.Migrations
                 {
                     b.HasOne("StockManagment.Models.Broker", "Broker")
                         .WithMany("Orders")
-                        .HasForeignKey("BrokerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BrokerId");
 
                     b.HasOne("StockManagment.Models.Person", "Person")
                         .WithMany("Orders")
@@ -112,6 +126,19 @@ namespace StockManagment.Migrations
                     b.HasOne("StockManagment.Models.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("StockManagment.Models.PeopleBrokers", b =>
+                {
+                    b.HasOne("StockManagment.Models.Broker", "Broker")
+                        .WithMany("PeopleBrokers")
+                        .HasForeignKey("BrokerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("StockManagment.Models.Person", "Person")
+                        .WithMany("PeopleBrokers")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,7 +19,12 @@ namespace StockManagment.Models
 
         public ICollection<Order> Orders { get; set; }
 
-        public ICollection<PeopleBrokers> PeopleBrokers { get; set; }
+        public Broker()
+        {
+            People = new Collection<Person>();
+            Orders = new Collection<Order>();
+
+        }
 
     }
 }
