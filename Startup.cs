@@ -31,7 +31,7 @@ namespace StockManagment
 
             services.AddSignalR();
             services.AddAutoMapper();
-            services.AddTransient<IMarketNotificationServices, MarketNotificationServices>();
+            services.AddTransient<IStocksNotificationServices, StocksNotificationServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

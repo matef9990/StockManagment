@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using StockManagment.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StockManagment.Controllers
@@ -16,9 +15,9 @@ namespace StockManagment.Controllers
     {
         private readonly StocksDbContext _context;
 
-        private readonly IMarketNotificationServices _marketNotificationServices;
+        private readonly IStocksNotificationServices _marketNotificationServices;
 
-        public StocksController(StocksDbContext context, IMarketNotificationServices marketNotificationServices)
+        public StocksController(StocksDbContext context, IStocksNotificationServices marketNotificationServices)
         {
             _context = context;
             _marketNotificationServices = marketNotificationServices;
@@ -32,59 +31,6 @@ namespace StockManagment.Controllers
             return _context.Stocks;
         }
 
-        // GET: api/Stocks/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetStock([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var stock = await _context.Stocks.FindAsync(id);
-
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(stock);
-        }
-
-        // PUT: api/Stocks/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStock([FromRoute] int id, [FromBody] Stock stock)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != stock.StockId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(stock).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         [HttpPatch]
         public async Task<IActionResult> PutStock()
@@ -108,55 +54,7 @@ namespace StockManagment.Controllers
 
 
 
-        // POST: api/Stocks
-        [HttpPost]
-        public async Task<IActionResult> PostStock([FromBody] Stock stock)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            _context.Stocks.Add(stock);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStock", new { id = stock.StockId }, stock);
-        }
-
-        // DELETE: api/Stocks/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStock([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var stock = await _context.Stocks.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            _context.Stocks.Remove(stock);
-            await _context.SaveChangesAsync();
-
-            return Ok(stock);
-        }
-
-        private bool StockExists(int id)
-        {
-            return _context.Stocks.Any(e => e.StockId == id);
-        }
-
-        //private  void SetPrices()
-        //{
-        //    var rdm = new Random();
-        //    foreach (var stock in _context.Stocks)
-        //    {
-        //        stock.Price = rdm.Next(1, 100);
-        //    }
-        //     _context.SaveChanges();
-        //}
     }
 }
