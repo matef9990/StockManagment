@@ -17,6 +17,7 @@ namespace StockManagment.Models
 
         public DbSet<Stock> Stocks { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

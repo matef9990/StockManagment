@@ -45,6 +45,7 @@ namespace StockManagment
             app.UseMvc();
             app.UseCors(MyAllowSpecificOrigins);
             app.UseSignalR(route => route.MapHub<StocksHub>("/hubs/stocks"));
+            app.UseSignalR(route => route.MapHub<CustomerHub>("/hubs/customer"));
         }
     }
 }
